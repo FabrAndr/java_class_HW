@@ -14,7 +14,7 @@ public class filterMethods {
     public static void   showMenu() {
             Map<Integer, String > map = new HashMap<>(createMenuFilter());
             showFilter(map);
-            System.out.println("Для выхода введите 'exit'");
+            System.out.println("Для выхода введите 'exit' \nВведите команду ");
             String o = getChoice();
             try {
                 Integer i = Integer.valueOf(o); 
@@ -22,7 +22,7 @@ public class filterMethods {
             } catch (NumberFormatException e) {
                 if (o.equals("exit")) System.exit(0);            
                 else {
-                    System.out.printf("Something wrong, you write '%s'", o);
+                    System.out.printf("Something wrong, you write '%s'\n", o);
                 }
             }
         }
@@ -40,21 +40,21 @@ public class filterMethods {
     }
 
     public static void showFilter(Map<Integer, String> filter){
-        for (int i = 1; i < filter.size(); i++) {
+        for (int i = 1; i < filter.size()+1; i++) {
             System.out.printf("Для фильтрации объектов используя '%s' введите %d; \n", filter.get(i), i);
         }
     }
 
     public static String getChoice() {
-        System.out.println("Введите команду");
+
         String choice = "";
         Scanner scan = new Scanner(System.in);
-        try{
+        try {
             choice = scan.next();  
-       } catch (Exception e) {
+        } catch (Exception e) {
         System.out.println(e);
        } 
        return choice;
     }
-    
+
 }

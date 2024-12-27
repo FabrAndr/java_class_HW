@@ -8,7 +8,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
+import java.util.NoSuchElementException;
+import java.util.Optional;
 public class filter {
     private static Map<Integer, String> name_map = new TreeMap<>();
     private static Map<Integer, String> serNum_map = new TreeMap<>();
@@ -20,16 +21,14 @@ public class filter {
     
 
 
-public static  void showSortedMap(Map<Integer, String> map) {
+public static  Queue<Integer> SortedMap(Map<Integer, String> map) {
     Queue<Integer> sorted = new LinkedList<Integer>();
     Set<Map.Entry<Integer, String>> set = new HashSet<>(sortedByValues(map));
     for (Map.Entry<Integer, String> s : set){
         Integer i = s.getKey();
         sorted.add(i);
     }
-    for (Integer i : sorted) {
-        System.out.println(lap_map.get(i));
-    }
+    return sorted;
 }
 
 public static void addNewLaptop(laptop lap) {
@@ -39,33 +38,61 @@ public static void addNewLaptop(laptop lap) {
     ord_map.put(lap.getIndex(), lap.getORD());
     color_map.put(lap.getIndex(), lap.getColor());
     os_map.put(lap.getIndex(), lap.getOs());
-    lap_map.put(lap.getIndex(), lap);
+    lap_map.put(lap.getIndex(), lap); 
 }
 
 public static void chooseFilterMap( Integer choice){
+    Queue<Integer> q = new LinkedList<Integer>();
     switch (choice) {
-        case 1:
-            showSortedMap(name_map);
-            break;
-        case 2:
-            showSortedMap(serNum_map);
-            break;
-        case 3:
-            showSortedMap(cost_map);
-            break;
-        case 4:
-            showSortedMap(ord_map);
-            break;
-        case 5:
-            showSortedMap(color_map);
-            break;
-        case 6:
-            showSortedMap(os_map);
-            break;
-        default:
-            throw new AssertionError();
+        case 1 -> {
+            q = SortedMap(name_map);
+            for (Integer i : q) {
+                System.out.println(lap_map.get(i));                
+            }
+            }
+        case 2 -> {
+            q = SortedMap(serNum_map);
+            for (Integer i : q) {
+                System.out.println(lap_map.get(i));
+            }
+            }
+        case 3 -> {
+            q = SortedMap(cost_map);
+            System.out.println("Введите минимальное значение:");
+            Integer min_cost =Integer.getInteger(filterMethods.getChoice());
+            for (Integer i : q) {
+                if (Integer.getInteger(lap_map.get(i).getCost()) >= min_cost) System.out.println(lap_map.get(i));
+            }
+            }
+        case 4 -> {
+            q = SortedMap(ord_map);
+            System.out.println("Введите минимальное значение:");
+            Integer min_ord =Integer.getInteger(filterMethods.getChoice());
+            for (Integer i : q) {
+                if (Integer.getInteger(lap_map.get(i).getORD()) >= min_ord) System.out.println(lap_map.get(i));
+            }
+            }
+        case 5 -> {
+            q = SortedMap(color_map);
+            System.out.println("Введите цвет:");
+            String color =filterMethods.getChoice().toLowerCase();
+            for (Integer i : q) {
+                if ((lap_map.get(i).getColor().toLowerCase()).equals(color)) System.out.println(lap_map.get(i));
+            }
+            }
+        case 6 -> {
+            q = SortedMap(os_map);
+            System.out.println("Введите ОС:");
+            String os =filterMethods.getChoice().toLowerCase();
+            for (Integer i : q) {
+                if ((lap_map.get(i).getOs().toLowerCase()).equals(os)) System.out.println(lap_map.get(i));
+            }
+            }
+        default -> {
+            choice = 1;
+            
+        }
     }
-    
 }
 
 private static <K,V extends Comparable<? super V>>

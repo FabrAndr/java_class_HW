@@ -10,7 +10,7 @@ public class laptop {
     private static Integer count = 0;
     private final Integer index;
 
-    public laptop(String name, String serialNumber, String cost, String ORD, String color, String os) {
+    public  laptop(String name, String serialNumber, String cost, String ORD, String color, String os) {
         this.name = name;
         this.serialNumber = serialNumber;
         this.cost = cost;
@@ -18,7 +18,7 @@ public class laptop {
         this.color = color;
         this.os = os;
         this.index = count +=1;
-        final laptop lap = this;
+        laptop lap = this;
         filter.addNewLaptop(lap);
     }
 
