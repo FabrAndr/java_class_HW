@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class filterMethods {
 
+    private final static Map<Integer, String> filterMenu= new HashMap<>();
+
     public static void main(String[] args) {
         while (true) { 
             showMenu();
@@ -17,7 +19,11 @@ public class filterMethods {
             System.out.println("Для выхода введите 'exit' \nВведите команду ");
             String o = getChoice();
             try {
-                Integer i = Integer.valueOf(o); 
+                Integer i = Integer.valueOf(o);
+                if (i == 0 || i > filterMenu.keySet().size()) {
+                    System.out.printf("Something wrong, you write '%d'\n", i);
+                    showMenu();
+                }
                 filter.chooseFilterMap(i);
             } catch (NumberFormatException e) {
                 if (o.equals("exit")) System.exit(0);            
@@ -28,15 +34,14 @@ public class filterMethods {
         }
     
     public static Map<Integer, String> createMenuFilter() {
-        Map<Integer, String> filter = new HashMap<>();
-        filter.put(1, "Имя");
-        filter.put(2, "Серийный номер");
-        filter.put(3, "Стоимость");
-        filter.put(4, "ОЗУ");
-        filter.put(5, "Цвет");
-        filter.put(6, "Опеационная система");
+        filterMenu.put(1, "Имя");
+        filterMenu.put(2, "Серийный номер");
+        filterMenu.put(3, "Стоимость");
+        filterMenu.put(4, "ОЗУ");
+        filterMenu.put(5, "Цвет");
+        filterMenu.put(6, "Опеационная система");
         
-        return filter;
+        return filterMenu;
     }
 
     public static void showFilter(Map<Integer, String> filter){
